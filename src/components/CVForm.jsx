@@ -20,7 +20,11 @@ export default function CVForm({ data, updateData }) {
           messages: [
             {
               role: 'system',
-              content: 'You are "Jeremie AI", an expert CV generator. Your task is to generate a highly professional, complete, and realistic CV from scratch for a creative professional or tech worker. Output exactly the following JSON structure filled with creative, high-quality, and realistic professional data. Do NOT add any markdown formatting. Return ONLY valid JSON.\n{"personal":{"fullName":"","nationality":"","residentOf":"","dob":"","gender":"","maritalStatus":"","email":"","phone":""},"experience":[{"period":"","title":"","company":"","location":"","summary":"","responsibilities":""}],"education":[{"date":"","institution":"","location":"","degree":"","details":""}],"skills":[{"name":"","level":"","years":""}],"languages":[{"name":"","listening":"","writing":"","speaking":""}],"references":[{"name":"","position":"","phone":"","email":""}]}'
+              content: 'You are "Jeremie AI", an expert CV writer and generator. Your task is to take the provided CV data (in JSON format) and intelligently improve and expand it. Fix grammar, improve phrasing, and make the language highly professional and impactful. If any fields are empty, generate realistic, high-quality, and creative placeholder data to complete the CV perfectly. Return the exact same JSON structure. Do NOT add any markdown formatting. Return ONLY valid JSON.'
+            },
+            {
+              role: 'user',
+              content: JSON.stringify(data)
             }
           ],
           temperature: 0.7,
