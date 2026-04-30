@@ -438,3 +438,64 @@ input:focus, select:focus, textarea:focus {
 .modal-close:hover {
   color: #ef4444;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr !important;
+    gap: 0.8rem;
+  }
+  
+  .language-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr auto !important;
+    gap: 0.5rem;
+  }
+
+  .form-section {
+    padding: 1.2rem;
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .preview-section {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+    padding: 0;
+    background: transparent;
+  }
+  
+  .cv-document {
+    width: 100%;
+    min-height: auto;
+    padding: 15px;
+    font-size: 9pt;
+  }
+
+  .app-header h1 {
+    font-size: 2rem;
+  }
+
+  .btn-print {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 580px) {
+  .language-grid {
+    grid-template-columns: 1fr 1fr auto !important;
+  }
+  
+  .app-header div {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
