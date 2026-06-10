@@ -5,6 +5,7 @@ const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 
 export default function CVForm({ data, updateData }) {
   const [isGenerating, setIsGenerating] = useState(false);
+  const [aiContext, setAiContext] = useState('');
 
   const generateWithAI = async () => {
     setIsGenerating(true);
@@ -24,7 +25,7 @@ export default function CVForm({ data, updateData }) {
             },
             {
               role: 'user',
-              content: JSON.stringify(data)
+              content: `Here is the current CV data:\n${JSON.stringify(data)}${aiContext ? '\n\nPlease carefully analyze, enhance, and heavily tailor the generated CV content, especially summaries and responsibilities, to perfectly fit the following job description/context:\n' + aiContext : ''}`
             }
           ],
           temperature: 0.7,
@@ -229,7 +230,23 @@ export default function CVForm({ data, updateData }) {
       ))}
       <button className="btn-add" onClick={() => addItem('references', { name: '', position: '', phone: '', email: '' })}>+ Add Reference</button>
 
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem', paddingTop: '1.5rem', borderTop: '2px dashed #e2e8f0' }}>
+      <div style={{ marginTop: '3rem', paddingTop: '1.5rem', borderTop: '2px dashed #e2e8f0', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <div>
+          <label style={{ fontWeight: '700', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem' }}>
+            Target Job Description & Context
+          </label>
+          <p style={{ fontSize: '0.9rem', color: '#64748b', margin: '0.3rem 0 0.5rem 0' }}>Paste the job description or specific context here. Jeremie AI will precisely tailor your entire CV to match this perfectly.</p>
+        </div>
+        <textarea 
+          rows="4" 
+          value={aiContext}
+          onChange={(e) => setAiContext(e.target.value)}
+          placeholder="e.g. Paste the job description here..."
+          style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1', resize: 'vertical' }}
+        />
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1.5rem' }}>
         <button 
           onClick={generateWithAI} 
           disabled={isGenerating}
