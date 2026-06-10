@@ -148,12 +148,12 @@ function App() {
       <CVForm data={data} updateData={setData} />
       <CVPreview data={data} />
 
-      <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', margin: '2rem 0' }}>
-        <button className="btn-print" onClick={handlePrint} style={{ margin: 0 }}>
+      <div className="action-buttons">
+        <button className="btn-print" onClick={handlePrint}>
           <Printer size={20} />
           {data.personal.fullName ? `Print ${data.personal.fullName}'s CV` : 'Print CV'}
         </button>
-        <button className="btn-print" onClick={exportToWord} style={{ margin: 0, backgroundColor: '#2563eb' }}>
+        <button className="btn-print" onClick={exportToWord} style={{ backgroundColor: '#2563eb' }}>
           <Download size={20} />
           Download as Word
         </button>
