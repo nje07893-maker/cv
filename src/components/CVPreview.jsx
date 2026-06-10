@@ -93,6 +93,7 @@ export default function CVPreview({ data }) {
               <tr>
                 <th>Language</th>
                 <th>Listening</th>
+                <th>Reading</th>
                 <th>Writing</th>
                 <th>Speaking</th>
               </tr>
@@ -102,6 +103,7 @@ export default function CVPreview({ data }) {
                 <tr key={i}>
                   <td>{lang.name}</td>
                   <td>{lang.listening}</td>
+                  <td>{lang.reading}</td>
                   <td>{lang.writing}</td>
                   <td>{lang.speaking}</td>
                 </tr>
@@ -109,6 +111,23 @@ export default function CVPreview({ data }) {
             </tbody>
           </table>
         </div>
+
+        {data.hobbies && data.hobbies.length > 0 && data.hobbies.some(h => h.name) && (
+          <>
+            <div className="cv-separator">________________________________________</div>
+
+            <div className="cv-text-section">
+              <h3 className="cv-text-header">HOBBIES & INTERESTS</h3>
+              <div className="cv-exp-list" style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', marginTop: '0.5rem' }}>
+                {data.hobbies.filter(h => h.name).map((hobby, i) => (
+                  <div key={i} className="cv-list-item" style={{ margin: 0, fontWeight: '500' }}>
+                    • {hobby.name}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
 
         <div className="cv-text-section">
           <h3 className="cv-text-header">REFERENCES</h3>

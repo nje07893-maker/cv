@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Briefcase, GraduationCap, Code, Languages, Users, Wand2, Loader2 } from 'lucide-react';
+import { User, Briefcase, GraduationCap, Code, Languages, Users, Wand2, Loader2, Heart } from 'lucide-react';
 
 const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 
@@ -193,15 +193,25 @@ export default function CVForm({ data, updateData }) {
 
       <h2 className="section-title"><Languages size={20} /> Languages</h2>
       {data.languages.map((lang, index) => (
-        <div key={index} className="form-row language-grid" style={{marginBottom: '0.5rem', alignItems: 'end', gridTemplateColumns: '2fr 1fr 1fr 1fr auto'}}>
+        <div key={index} className="form-row language-grid" style={{marginBottom: '0.5rem', alignItems: 'end', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr auto'}}>
           <input name="name" value={lang.name} onChange={(e) => handleChange(e, 'languages', null, index)} placeholder="Language" />
           <input name="listening" value={lang.listening} onChange={(e) => handleChange(e, 'languages', null, index)} placeholder="Listening" />
+          <input name="reading" value={lang.reading} onChange={(e) => handleChange(e, 'languages', null, index)} placeholder="Reading" />
           <input name="writing" value={lang.writing} onChange={(e) => handleChange(e, 'languages', null, index)} placeholder="Writing" />
           <input name="speaking" value={lang.speaking} onChange={(e) => handleChange(e, 'languages', null, index)} placeholder="Speaking" />
           <button className="btn-remove" onClick={() => removeItem('languages', index)}>×</button>
         </div>
       ))}
-      <button className="btn-add" onClick={() => addItem('languages', { name: '', listening: '', writing: '', speaking: '' })}>+ Add Language</button>
+      <button className="btn-add" onClick={() => addItem('languages', { name: '', listening: '', reading: '', writing: '', speaking: '' })}>+ Add Language</button>
+
+      <h2 className="section-title"><Heart size={20} /> Hobbies & Interests</h2>
+      {data.hobbies && data.hobbies.map((hobby, index) => (
+        <div key={index} className="form-row" style={{marginBottom: '0.5rem', alignItems: 'end'}}>
+          <input name="name" value={hobby.name} onChange={(e) => handleChange(e, 'hobbies', null, index)} placeholder="Hobby/Interest" style={{ flex: 1 }} />
+          <button className="btn-remove" onClick={() => removeItem('hobbies', index)}>×</button>
+        </div>
+      ))}
+      <button className="btn-add" onClick={() => addItem('hobbies', { name: '' })}>+ Add Hobby</button>
 
       <h2 className="section-title"><Users size={20} /> References</h2>
       {data.references.map((ref, index) => (

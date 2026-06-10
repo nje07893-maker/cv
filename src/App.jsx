@@ -37,7 +37,10 @@ const initialData = {
     { name: '', level: '', years: '' }
   ],
   languages: [
-    { name: '', listening: '', writing: '', speaking: '' }
+    { name: '', listening: '', reading: '', writing: '', speaking: '' }
+  ],
+  hobbies: [
+    { name: '' }
   ],
   references: [
     { name: '', position: '', phone: '', email: '' }
