@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CVForm from './components/CVForm';
 import CVPreview from './components/CVPreview';
-import { Printer, Mail, Loader2, X } from 'lucide-react';
+import { Printer, Mail, Loader2, X, Download } from 'lucide-react';
 
 const initialData = {
   personal: {
@@ -55,6 +55,41 @@ function App() {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const exportToWord = () => {
+    const cvElement = document.getElementById('cv-print-area');
+    if (!cvElement) return;
+
+    const htmlContent = `
+      <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+      <head><meta charset='utf-8'><title>Export HTML to Word</title>
+      <style>
+        body { font-family: 'Arial', sans-serif; }
+        .cv-text-header { border-bottom: 2px solid #ccc; font-size: 14pt; margin-top: 15pt; margin-bottom: 5pt; }
+        .cv-text-item { margin-bottom: 3pt; font-size: 11pt; }
+        .cv-exp-header-text strong { font-size: 12pt; }
+        .cv-exp-summary, .cv-list-item { font-size: 11pt; margin-bottom: 3pt; }
+        .cv-simple-table { width: 100%; border-collapse: collapse; margin-top: 10pt; }
+        .cv-simple-table th, .cv-simple-table td { border: 1px solid #ddd; padding: 5pt; text-align: left; font-size: 11pt; }
+        .cv-separator { margin: 15pt 0; color: #ccc; text-align: center; font-size: 12px; }
+      </style>
+      </head><body>
+        ${cvElement.innerHTML}
+      </body></html>
+    `;
+
+    const blob = new Blob(['\ufeff', htmlContent], {
+      type: 'application/msword'
+    });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${data.personal.fullName ? data.personal.fullName.replace(/\s+/g, '_') : 'CV'}.doc`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleContactSubmit = async (e) => {
@@ -113,10 +148,16 @@ function App() {
       <CVForm data={data} updateData={setData} />
       <CVPreview data={data} />
 
-      <button className="btn-print" onClick={handlePrint}>
-        <Printer size={20} />
-        {data.personal.fullName ? `Print ${data.personal.fullName}'s CV` : 'Print CV'}
-      </button>
+      <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', margin: '2rem 0' }}>
+        <button className="btn-print" onClick={handlePrint} style={{ margin: 0 }}>
+          <Printer size={20} />
+          {data.personal.fullName ? `Print ${data.personal.fullName}'s CV` : 'Print CV'}
+        </button>
+        <button className="btn-print" onClick={exportToWord} style={{ margin: 0, backgroundColor: '#2563eb' }}>
+          <Download size={20} />
+          Download as Word
+        </button>
+      </div>
 
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
