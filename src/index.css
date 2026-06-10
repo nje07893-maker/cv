@@ -333,7 +333,7 @@ input:focus, select:focus, textarea:focus {
 /* Print Styles */
 @media print {
   @page {
-    margin: 15mm;
+    margin: 0; /* Removes browser header, footer, timestamps, and page url */
   }
   body {
     background: white;
@@ -356,7 +356,8 @@ input:focus, select:focus, textarea:focus {
     box-shadow: none;
     margin: 0;
     width: 100%;
-    padding: 0;
+    padding: 15mm; /* Apply document padding instead of page margin */
+    box-sizing: border-box;
   }
 }
 
